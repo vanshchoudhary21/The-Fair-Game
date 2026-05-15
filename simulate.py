@@ -1,17 +1,13 @@
 import numpy as np
 import pandas as pd
 
-# ----------------------------------------
-# RANDOM SEED
-# ----------------------------------------
 
 np.random.seed(42)
 
 print("\nSimulation Started...\n")
 
-# ----------------------------------------
+
 # GINI FUNCTION
-# ----------------------------------------
 
 def gini(array):
 
@@ -26,9 +22,7 @@ def gini(array):
         - 2 * np.sum(cumulative) / cumulative[-1]
     ) / n
 
-# ----------------------------------------
 # LORENZ CURVE FUNCTION
-# ----------------------------------------
 
 def lorenz_curve(wealth):
 
@@ -53,9 +47,7 @@ def lorenz_curve(wealth):
         cumulative_wealth
     )
 
-# ----------------------------------------
 # MAIN SIMULATION FUNCTION
-# ----------------------------------------
 
 def run_simulation(
     system_name,
@@ -88,15 +80,13 @@ def run_simulation(
         'Poverty Percentage': []
     }
 
-    # ----------------------------------------
+
     # MAIN LOOP
-    # ----------------------------------------
 
     for round_num in range(1, rounds + 1):
 
-        # ----------------------------------------
+      
         # PROGRESS LOG
-        # ----------------------------------------
 
         if round_num % 5000 == 0:
 
@@ -105,9 +95,7 @@ def run_simulation(
                 f" Round {round_num}/{rounds}"
             )
 
-        # ----------------------------------------
         # TRANSACTIONS
-        # ----------------------------------------
 
         for _ in range(100):
 
@@ -137,9 +125,7 @@ def run_simulation(
 
             wealth[winner] += 2 * stake
 
-        # ----------------------------------------
         # REDISTRIBUTION
-        # ----------------------------------------
 
         if (
             tax_rate > 0 and
@@ -171,9 +157,7 @@ def run_simulation(
 
                 wealth[poor_agents] += redistribution
 
-        # ----------------------------------------
-        # STORE CHECKPOINT METRICS
-        # ----------------------------------------
+        # CHECKPOINT METRICS
 
         if round_num in checkpoints:
 
@@ -232,9 +216,7 @@ def run_simulation(
 
     return df, wealth
 
-# ----------------------------------------
-# RUN SIMULATIONS
-# ----------------------------------------
+# SIMULATIONS
 
 free_market_df, free_final = run_simulation(
     system_name='Free Market'
@@ -256,9 +238,7 @@ egalitarian_df, egalitarian_final = run_simulation(
     redistribution_frequency=500
 )
 
-# ----------------------------------------
 # COMPARISON TABLE
-# ----------------------------------------
 
 comparison_df = pd.DataFrame({
 
@@ -302,9 +282,7 @@ comparison_df = pd.DataFrame({
         egalitarian_df['Poverty Percentage']
 })
 
-# ----------------------------------------
 # LORENZ CURVE DATA
-# ----------------------------------------
 
 free_x, free_y = lorenz_curve(
     free_final
@@ -333,9 +311,7 @@ lorenz_df = pd.DataFrame({
         egalitarian_y
 })
 
-# ----------------------------------------
-# SAVE CSV FILES
-# ----------------------------------------
+# CSV FILES
 
 print("\nSaving CSV Files...\n")
 
